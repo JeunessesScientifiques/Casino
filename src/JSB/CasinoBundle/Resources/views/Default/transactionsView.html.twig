@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Visualisation des transactions</h1>
+    <p>Solde : {{ solde }}</p>
+    <ul>
+        {% for transaction in transactions %}
+            <li>{{ transaction.dateHeure|date('h:i') }} # {{ transaction.montant }} : {{ transaction.description }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

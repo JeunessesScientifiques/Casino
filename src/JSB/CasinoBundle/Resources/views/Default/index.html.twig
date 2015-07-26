@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for personne in personnes %}
+            <li><a href="{{ path("transactions",{"id" : personne.id }) }}">{{ personne.nom }} {{ personne.prenom }}</a> (Solde : {{ personne.solde }}) - <a href="{{ path("newTransaction",{ "idPersonne" : personne.id }) }}">Retrait/Dépôt d'argent</a></li>
+            {% endfor %}
+    </ul>
+    <h2>Options de banque</h2>
+    <ul>
+        <li>Vendre un Stand</li>
+        <li>Louer un Stand</li>
+        <li>Acheter des parts d'un Stand</li>
+    </ul>
+    <h2>Passer au tour suivant</h2>
+    <p>/nouveauTour/<strong>{tauxDInteret}</strong> - Par exemple pour une augmentation de <strong>2,5%</strong> - /nouveauTour/<strong>25</strong></p>
+{% endblock %}
