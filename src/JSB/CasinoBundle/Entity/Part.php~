@@ -1,0 +1,44 @@
+<?php
+
+namespace JSB\CasinoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Part
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="JSB\CasinoBundle\Entity\PartRepository")
+ */
+class Part
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Entreprise", inversedBy="parts")
+     */
+    private $entreprise;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Personne", inversedBy="parts")
+     */
+    private $proprietaire;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

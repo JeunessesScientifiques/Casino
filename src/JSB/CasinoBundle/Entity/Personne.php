@@ -46,6 +46,11 @@ class Personne
      * @ORM\OneToMany(targetEntity="Transaction", mappedBy="personne")
      */
     private $transactions;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Part", mappedBy="proprietaire")
+     */
+    private $parts;
 
 
     /**
@@ -177,5 +182,42 @@ class Personne
         }
         
         return round($solde, 2);
+    }
+
+    /**
+     * Add parts
+     *
+     * @param \JSB\CasinoBundle\Entity\Part $parts
+     * @return Personne
+     */
+    public function addPart(\JSB\CasinoBundle\Entity\Part $parts)
+    {
+        $this->parts[] = $parts;
+
+        return $this;
+    }
+
+    /**
+     * Remove parts
+     *
+     * @param \JSB\CasinoBundle\Entity\Part $parts
+     */
+    public function removePart(\JSB\CasinoBundle\Entity\Part $parts)
+    {
+        $this->parts->removeElement($parts);
+    }
+
+    /**
+     * Get parts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParts()
+    {
+        return $this->parts;
+    }
+    
+    public function __toString() {
+        return $this->getPrenom()." ".$this->getNom()." ( ".$this->getSolde()." )";
     }
 }

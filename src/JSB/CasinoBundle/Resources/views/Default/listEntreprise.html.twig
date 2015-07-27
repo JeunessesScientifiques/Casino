@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for entreprise in entreprises %}
+            <li><a href="{{ path("entreprise", { "idEntreprise" : entreprise.id } ) }}">{{ entreprise.nom }}</a> - Prix : {{ entreprise.valeur / 10 }} - Reste {{ entreprise.partRestantes }}
+                {% if entreprise.parts|length > 0 %}
+                    (<a href="{{ path("viewPart", { "idEntreprise" : entreprise.id }) }}">Voir les parts disctribuées</a>)
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -46,6 +46,11 @@ class Personne
      * @ORM\OneToMany(targetEntity="Transaction", mappedBy="personne")
      */
     private $transactions;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Part", mappedBy="proprietaire")
+     */
+    private $parts;
 
 
     /**
@@ -166,5 +171,16 @@ class Personne
     public function getTransactions()
     {
         return $this->transactions;
+    }
+    
+    public function getSolde(){
+        
+        $solde = 0;
+        
+        foreach($this->transactions as $transaction){
+            $solde += $transaction->getMontant();
+        }
+        
+        return round($solde, 2);
     }
 }

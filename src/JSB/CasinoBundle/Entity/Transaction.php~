@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="JSB\CasinoBundle\Entity\TransactionRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * 
  */
-class Transaction
-{
-    
+class Transaction {
+
     /**
      * @var integer
      *
@@ -35,12 +36,12 @@ class Transaction
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-    
+
     /**
      * @ORM\Column(name="dateHeure", type="datetime")
      */
     private $dateHeure;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Personne", inversedBy="transactions")
      */
@@ -51,8 +52,7 @@ class Transaction
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -62,9 +62,8 @@ class Transaction
      * @param float $montant
      * @return Transaction
      */
-    public function setMontant($montant)
-    {
-        $this->montant = $montant;
+    public function setMontant($montant) {
+        $this->montant = round($montant, 2);
 
         return $this;
     }
@@ -74,9 +73,8 @@ class Transaction
      *
      * @return float 
      */
-    public function getMontant()
-    {
-        return $this->montant;
+    public function getMontant() {
+        return round($this->montant, 2);
     }
 
     /**
@@ -85,8 +83,7 @@ class Transaction
      * @param string $description
      * @return Transaction
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -97,8 +94,7 @@ class Transaction
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -108,8 +104,7 @@ class Transaction
      * @param \JSB\CasinoBundle\Entity\Personne $personne
      * @return Transaction
      */
-    public function setPersonne(\JSB\CasinoBundle\Entity\Personne $personne = null)
-    {
+    public function setPersonne(\JSB\CasinoBundle\Entity\Personne $personne = null) {
         $this->personne = $personne;
 
         return $this;
@@ -120,8 +115,36 @@ class Transaction
      *
      * @return \JSB\CasinoBundle\Entity\Personne 
      */
-    public function getPersonne()
-    {
+    public function getPersonne() {
         return $this->personne;
     }
+
+    /**
+     * Set dateHeure
+     *
+     * @param \DateTime $dateHeure
+     * @return Transaction
+     */
+    public function setDateHeure($dateHeure) {
+        $this->dateHeure = $dateHeure;
+
+        return $this;
+    }
+
+    /**
+     * Get dateHeure
+     *
+     * @return \DateTime 
+     */
+    public function getDateHeure() {
+        return $this->dateHeure;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist() {
+        $this->setDateHeure(new \DateTime());
+    }
+
 }

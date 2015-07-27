@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for part in parts %}
+            <li>Part {{ loop.index }} : {{ part.proprietaire.prenom }} {{ part.proprietaire.nom }} (<a href="{{ path("revendrePart", { 'idPart' : part.id }) }}">Renvendre la part</a> : {{ (part.entreprise.valeur * 0.85) / 10 }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
